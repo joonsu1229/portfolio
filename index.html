@@ -46,6 +46,13 @@
         .project-card {
             @apply bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden transition-all duration-300 hover:shadow-lg h-full;
         }
+        
+        /* 웹가이드 섹션 카드 테두리 (HTML 뷰에도 적용) */
+        #project-webguide .project-card {
+            border: 2px solid #94a3b8; /* Slate-400 */
+            border-radius: 1rem;
+        }
+
         /* Infrastructure Grid */
         .infra-box {
             @apply flex flex-col items-center justify-center p-4 bg-white border border-slate-200 rounded-xl shadow-sm hover:border-primary transition-colors;
@@ -57,10 +64,14 @@
         .pipeline-dot {
             @apply absolute left-[-9px] top-0 w-4 h-4 rounded-full bg-white border-4 border-primary;
         }
-        /* Goal & Background Box */
+        
+        /* [수정] Goal & Background Box (굵은 선 제거, Key Takeaway와 동일 스타일) */
         .story-box {
-            @apply bg-slate-50 p-6 rounded-xl border-l-4 border-primary mb-8;
+            @apply bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8; 
+            border-left-width: 1px !important; /* 왼쪽 굵은 선 강제 제거 */
+            border-color: #e2e8f0 !important; /* 슬레이트 200 색상 */
         }
+        
         /* Image Caption Overlay */
         .img-caption {
             @apply absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4 text-white text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-300;
@@ -71,117 +82,276 @@
         }
     </style>
 
-    <!-- Print Specific Styles (PDF 변환용 강제 스타일) -->
+    <!-- Print Specific Styles (PDF 변환용 강제 스타일 수정본) -->
     <style>
         @media print {
             /* 1. 기본 설정 및 초기화 */
+            @page {
+                size: A4;
+                margin: 5mm; /* 여백 최소화 */
+            }
+            
             body {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 background-color: white !important;
-                /* 폰트 크기 조정 (A4 용지에 맞게 약간 축소 가능) */
-                font-size: 10pt; 
-            }
-            @page {
-                size: A4;
-                margin: 10mm; /* 여백 확보 */
+                font-size: 10pt !important;
+                zoom: 0.85; /* [중요] 전체 배율 85% */
             }
 
-            /* 2. 네비게이션 및 불필요한 요소 숨김 */
-            nav, .fixed, .sticky, #mobile-menu, footer, .hidden-on-print { 
+            /* 네비게이션 및 불필요 요소 제거 */
+            nav, .fixed, #mobile-menu, footer, .hidden-on-print { 
                 display: none !important; 
             }
-            
-            /* 상단 여백 제거 (네비게이션이 사라진 자리) */
+
+            /* =========================================
+               Issue 1: 첫 페이지 (Hero)
+               ========================================= */
             header#about {
-                padding-top: 2rem !important;
+                background-color: #0f172a !important; 
+                background-image: none !important; 
+                color: white !important;
+                padding-top: 8rem !important;
+                padding-bottom: 8rem !important;
                 min-height: auto !important;
+                height: auto !important;
+                margin-bottom: 2rem !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            header#about h1 {
+                font-size: 3.2rem !important; 
+                line-height: 1.2 !important;
+                margin-bottom: 1.5rem !important;
+            }
+            
+            header#about p {
+                font-size: 1.2rem !important;
                 margin-bottom: 2rem !important;
             }
 
-            /* 3. 레이아웃 강제 설정 (Desktop View 강제) */
+            header#about h1, 
+            header#about p {
+                color: white !important;
+                text-shadow: none !important;
+            }
+            header#about h1 span.text-transparent {
+                color: #60a5fa !important; 
+                background: none !important;
+                -webkit-text-fill-color: #60a5fa !important;
+            }
+
+            header#about a {
+                background-color: transparent !important;
+                border: 1px solid white !important;
+                color: white !important;
+                font-weight: bold !important;
+                box-shadow: none !important;
+                padding: 0.8rem 1.5rem !important; 
+                font-size: 1rem !important;
+                border-radius: 0.5rem !important;
+            }
+            header#about a:first-child {
+                background-color: white !important;
+                color: #0f172a !important;
+                border: none !important;
+            }
+
+            #infra {
+                padding-top: 2rem !important; 
+                padding-bottom: 4rem !important;
+                border: none !important;
+                break-after: page; 
+            }
             
-            /* 2:1 비율 그리드 (Audit Log 등) */
-            .print-grid-2-1 {
-                display: grid !important;
-                grid-template-columns: 65% 32% !important; /* 좌측 65%, 우측 32% */
-                gap: 3% !important;
-                width: 100% !important;
+            #infra h2.section-title {
+                font-size: 2.2rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+            #infra p {
+                font-size: 1rem !important;
+                margin-bottom: 2rem !important;
             }
 
-            /* 1:1 비율 그리드 (JSAI, RocketChat 등) */
-            .print-grid-1-1 {
-                display: grid !important;
-                grid-template-columns: 48% 48% !important;
-                gap: 4% !important;
-                width: 100% !important;
+            .infra-box {
+                padding: 1.5rem !important;
+                border: 1px solid #cbd5e1 !important;
+                min-height: 160px !important; 
+                justify-content: center !important;
+                border-radius: 1rem !important;
+            }
+            .infra-box i {
+                width: 2.5rem !important;
+                height: 2.5rem !important;
+            }
+            .infra-box h4 {
+                font-size: 1.1rem !important;
+                margin-top: 0.8rem !important;
             }
 
-            /* 3열 그리드 (WebGuide 기능 소개 등) */
-            .print-grid-3 {
+            /* =========================================
+               Issue 2: 감사로그(Audit Log) 레이아웃 수정
+               ========================================= */
+            #project-audit {
+                padding-top: 1.5rem !important;
+                padding-bottom: 0 !important;
+                margin-bottom: 0 !important;
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+                break-before: page !important;
+                display: block !important;
+            }
+
+            /* [수정] 그리드 비율 변경: 우측을 더 넓게 (1.5fr : 1fr) */
+            #project-audit .grid.lg\:grid-cols-3 {
                 display: grid !important;
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 20px !important;
-                width: 100% !important;
+                grid-template-columns: 1.5fr 1fr !important; /* 좌측 60%, 우측 40% */
+                gap: 1.5rem !important;
+            }
+            #project-audit .lg\:col-span-2 {
+                grid-column: 1 / 2 !important;
+            }
+            #project-audit .lg\:col-span-1 {
+                grid-column: 2 / 3 !important;
+            }
+
+            /* 여백 및 크기 조정 */
+            #project-audit .mb-12 { margin-bottom: 0.5rem !important; }
+            #project-audit .section-title { margin-bottom: 0.2rem !important; font-size: 1.8rem !important; }
+            #project-audit .section-subtitle { margin-bottom: 0 !important; }
+            #project-audit p.text-xl { font-size: 1rem !important; margin-top: 0.2rem !important; margin-bottom: 0.5rem !important; }
+            
+            /* Story Box: 굵은 선 제거 확인 */
+            #project-audit .story-box { 
+                padding: 0.8rem !important; 
+                margin-bottom: 0.5rem !important; 
+                border-radius: 1rem !important;
+                border-left-width: 1px !important; /* 인쇄 시에도 확실하게 제거 */
+            }
+            #project-audit h3 { font-size: 1.1rem !important; margin-bottom: 0.2rem !important; }
+            #project-audit .list-disc { margin-bottom: 0.5rem !important; }
+            #project-audit h4 { margin-top: 0.5rem !important; margin-bottom: 0.2rem !important; }
+
+            /* 이미지 영역 */
+            #project-audit .grid.print-grid-1-1 { 
+                gap: 0.5rem !important; 
+                margin-bottom: 0.5rem !important; 
+            }
+            #project-audit img { 
+                height: 120px !important; 
+                object-fit: cover !important; 
+                border-radius: 0.75rem !important; 
             }
             
-            /* 인프라 5열 그리드 */
-            .print-grid-5 {
-                display: grid !important;
-                grid-template-columns: repeat(5, 1fr) !important;
-                gap: 10px !important;
+            /* 로직 설명 부분 */
+            #project-audit .space-y-12 > :not([hidden]) ~ :not([hidden]) { 
+                --tw-space-y-reverse: 0; 
+                margin-top: 0.5rem !important; 
+                margin-bottom: 0 !important; 
             }
+            #project-audit .bg-slate-50.p-6 { 
+                padding: 0.8rem !important; 
+                margin-bottom: 0.5rem !important;
+                border-radius: 1rem !important;
+            }
+            #project-audit .text-2xl { font-size: 1.1rem !important; margin-bottom: 0.2rem !important; }
+            #project-audit p.mb-4 { margin-bottom: 0 !important; font-size: 0.85rem !important; }
 
-            /* Bento Grid (이미지 배치) */
+            /* 아키텍처 다이어그램 박스 */
+            #project-audit .mt-12 { 
+                margin-top: 0.5rem !important; 
+                padding: 0.6rem !important; 
+            }
+            #project-audit .mt-12 h4 { margin-bottom: 0.2rem !important; }
+            #project-audit .p-4 { padding: 0.5rem !important; }
+
+            /* =========================================
+               나머지 섹션 공통
+               ========================================= */
+            #project-jsai, #project-webguide, #project-opensource {
+                padding-top: 2rem !important;
+                padding-bottom: 1rem !important;
+                break-inside: avoid !important;
+                page-break-inside: avoid !important;
+                break-before: page !important;
+                display: block !important;
+            }
+            
+            .story-box { 
+                padding: 1rem !important; 
+                margin-bottom: 1rem !important; 
+                border-radius: 1rem !important; 
+                border-left-width: 1px !important; /* 모든 스토리 박스에서 왼쪽 굵은 선 제거 */
+            }
+            
             .print-bento-grid {
                 display: grid !important;
                 grid-template-columns: repeat(3, 1fr) !important;
-                grid-template-rows: 200px 200px !important; /* 높이 명시 */
+                grid-template-rows: 180px 180px !important;
+                height: auto !important;
                 gap: 1rem !important;
-                height: 420px !important;
-                page-break-inside: avoid !important;
+            }
+            .print-bento-grid img {
+                height: 100% !important;
+                max-height: none !important;
+                border-radius: 0.75rem !important;
+            }
+
+            /* 웹가이드 섹션 강조 카드 스타일 추가 */
+            #project-webguide .highlight-card {
+                @apply bg-white p-6 rounded-2xl shadow-lg border border-slate-100 flex flex-col h-full transition-all;
+                border: 1px solid #f1f5f9 !important;
+                box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+            }
+
+            .sticky { position: static !important; }
+            
+            .print-grid-1-1,
+            #project-jsai .grid.lg\:grid-cols-2,
+            #project-opensource .grid.lg\:grid-cols-2 {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 2rem !important;
+            }
+
+            .print-grid-3,
+            #project-webguide .grid.lg\:grid-cols-3 {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 1rem !important;
+            }
+
+            #infra .grid.md\:grid-cols-5 {
+                display: grid !important;
+                grid-template-columns: repeat(5, 1fr) !important;
+                gap: 0.5rem !important;
+            }
+
+            section a {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                border: 1px solid #1e293b !important; 
+                text-decoration: none !important;
+                border-radius: 0.5rem !important;
+            }
+            section a.bg-slate-800, 
+            section a.bg-slate-900, 
+            section a.bg-blue-600, 
+            section a.bg-red-600 {
+                color: white !important;
+                background-color: #1e293b !important; 
+            }
+            section a.bg-white,
+            section a.bg-slate-100 {
+                color: #1e293b !important;
+                background-color: white !important;
             }
             
-            /* Col Span 강제 */
-            .lg\:col-span-2 { grid-column: span 2 !important; }
-            .lg\:row-span-2 { grid-row: span 2 !important; }
-            .lg\:col-span-1 { grid-column: span 1 !important; }
-
-            /* 4. 애니메이션 및 투명도 제거 */
-            .fade-up { 
-                opacity: 1 !important; 
-                transform: none !important; 
-                transition: none !important;
-            }
-
-            /* 5. 페이지 넘김 제어 (박스 잘림 방지) */
-            section, .story-box, .project-card, .result-box, .infra-box, img, h2, h3, .grid {
+            section, .story-box, .project-card, .result-box, .infra-box, h3, h4 {
                 break-inside: avoid !important;
                 page-break-inside: avoid !important;
             }
-            
-            /* 섹션별 페이지 나누기 */
-            section {
-                page-break-after: always;
-                padding-top: 20px !important;
-                padding-bottom: 20px !important;
-                border: none !important;
-            }
-            section:last-child { page-break-after: auto; }
-
-            /* 6. 링크 스타일 정리 */
-            a { text-decoration: none !important; color: inherit !important; }
-            /* 링크 URL 텍스트 표시 제거 (지저분해짐 방지) */
-            a[href]:after { content: none !important; }
-
-            /* 7. 그림자 제거 (인쇄 품질 향상) */
-            .shadow-lg, .shadow-xl, .shadow-sm { box-shadow: none !important; border: 1px solid #e2e8f0 !important; }
-            
-            /* 8. 텍스트 색상 강제 (흐릿함 방지) */
-            p, li, span { color: #1e293b !important; }
-            
-            /* 높이 제한 해제 */
-            .h-screen, .min-h-screen { height: auto !important; }
         }
     </style>
 </head>
@@ -263,7 +433,7 @@
             <div class="text-center mb-12 fade-up">
                 <span class="section-subtitle">DevOps & Infrastructure</span>
                 <h2 class="section-title">자체 인프라 구축 및 운영 역량</h2>
-                <p class="text-slate-600 mt-4 max-w-2xl mx-auto">
+                <p class="text-slate-600 mt-4 max-w-2xl mx-auto leading-relaxed">
                     단순 코드 작성을 넘어, <strong>개인 서버(Oracle Cloud)</strong>를 활용하여 
                     서비스 배포, 도메인 연결, DB 관리 등 전체 인프라 라이프사이클을 직접 관리합니다.
                 </p>
@@ -275,10 +445,7 @@
                     Project Common Infrastructure
                 </h3>
                 
-                <!-- Added print-grid-5 for print layout -->
                 <div class="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-8 relative print-grid-5">
-                    <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-slate-100 -z-10 -translate-y-1/2"></div>
-
                     <!-- Cloud -->
                     <div class="infra-box group">
                         <div class="w-12 h-12 rounded-full bg-red-50 text-red-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
@@ -337,9 +504,9 @@
                     <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">Stability</span>
                 </div>
                 <h2 class="section-title">감사로그 시스템 구축</h2>
-					<p class="text-xl text-slate-600 mt-4 max-w-3xl whitespace-nowrap">
-						"서비스와 로그 시스템을 완전히 분리하여, 로그 장애가 서비스에 영향을 주지 않는 <strong>아키텍처</strong> 구현"
-					</p>
+                <p class="text-xl text-slate-600 mt-4 max-w-3xl whitespace-nowrap">
+                "서비스와 로그 시스템을 완전히 분리하여, 로그 장애가 서비스에 영향을 주지 않는 <strong>아키텍처</strong> 구현"
+                </p>
             </div>
 
             <!-- Goal & Background Story -->
@@ -364,19 +531,19 @@
             </div>
 
             <!-- Image Grid -->
-            <!-- Added print-grid-1-1 to force side-by-side images in print -->
+            <!-- Forced print-grid-1-1 -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 fade-up print-grid-1-1">
                 <div class="group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
                     <img src="img/audit1.png" alt="감사로그 상세 화면" class="w-full h-64 md:h-80 object-cover object-top hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Audit+Log+Detail'">
                     <div class="img-caption">상세 로그 조회</div>
                 </div>
                 <div class="group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-                    <img src="img/audit2.png" alt="감사로그 목록 화면" class="w-full h-64 md:h-80 object-cover object-top hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Audit+Log+List'">
+                    <img src="img/audit2.png" alt="감사로그 목록 화면" class="w-full h-64 md:h-80 object-cover object-top hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x300?text=Audit+Log+List'">
                     <div class="img-caption">관리자 로그 목록</div>
                 </div>
             </div>
 
-            <!-- IMPORTANT: Grid Layout Fix for PDF (2:1 Layout) -->
+            <!-- Main Content Grid: Left Content, Right Summary -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 print-grid-2-1">
                 <!-- Left: Core Logic -->
                 <div class="lg:col-span-2 space-y-12 fade-up">
@@ -492,8 +659,9 @@
                     <span class="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-bold">Reranking</span>
                 </div>
                 <h2 class="section-title">채용 사이트 크롤링 + AI 추출 파이프라인</h2>
-                <p class="text-xl text-slate-600 mt-4 max-w-3xl whitespace-nowrap">
-                    "<strong>Hybrid Search + Reranker</strong>를 도입하여 검색 정확도를 극대화하고, <strong>DOM Pre-processing</strong>으로 토큰 비용을 최적화한 지능형 채용 플랫폼"
+                <!-- 줄바꿈 금지(whitespace-nowrap)를 제거하여 안전하게 처리 -->
+                <p class="text-xl text-slate-600 mt-4 max-w-3xl">
+                    "<strong>DOM Pre-processing</strong>으로 토큰 비용을 최적화한 채용공고 크롤링 플랫폼"
                 </p>
             </div>
 
@@ -593,7 +761,6 @@
                 </div>
             </div>
 
-            <!-- JSAI Architecture & Links -->
             <div class="mt-12 bg-slate-50 rounded-xl p-8 border border-slate-200 fade-up break-inside-avoid">
                 <h4 class="font-bold text-slate-900 mb-4">System Architecture</h4>
                 <div class="flex flex-col md:flex-row justify-between items-center gap-8">
@@ -661,13 +828,12 @@
                     <strong>"이런 기능이 있으면 업무가 훨씬 편해지지 않을까?"</strong>라는 단순한 아이디어로 시작한 <strong>개인 사이드 프로젝트</strong>입니다.
                 </p>
                 <h4 class="font-bold text-slate-800 mb-2 mt-4">🎯 프로젝트 목표</h4>
-                <p class="text-slate-600 text-sm">
+                <p class="text-slate-600 text-sm leading-relaxed">
                     단순한 게시판이 아닌, 엔터프라이즈 환경에서 실제로 쓸 수 있는 수준의 <strong>SaaS형 지식 관리 시스템(Knowledge Base)</strong>을 
                     직접 기획하고 구축해보는 것이 목표였습니다.
                 </p>
             </div>
 
-            <!-- Image Bento Grid with forced Print Layout -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-auto md:h-[500px] mb-12 fade-up print-bento-grid">
                 <div class="md:col-span-2 md:row-span-2 group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm h-64 md:h-full lg:col-span-2 lg:row-span-2">
                     <img src="img/webguide1.png" alt="웹가이드 메인" class="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/800x600?text=WebGuide+Main'">
@@ -683,162 +849,122 @@
                 </div>
             </div>
 
-            <!-- Features Grid with forced 3 columns for print -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-up print-grid-3">
-                <!-- Tech Feature 1 -->
-                <div class="project-card p-6 flex flex-col break-inside-avoid">
+                <!-- Card 1: Plain (Removed shadow/border) -->
+                <div class="p-6 flex flex-col break-inside-avoid">
                     <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
                         <i data-lucide="layers"></i>
                     </div>
-                    <h4 class="font-bold text-lg mb-2">멀티테넌트 아키텍처</h4>
-                    <p class="text-slate-600 text-sm mb-4 flex-grow">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">멀티테넌트 아키텍처</h4>
+                    <p class="text-slate-600 text-sm mb-4 flex-grow leading-relaxed">
                         하나의 시스템으로 <strong>다수의 고객사(Tenant)를 동시에 지원</strong>하는 구조를 설계했습니다.
                     </p>
                 </div>
 
-                <!-- Tech Feature 2 -->
-                <div class="project-card p-6 flex flex-col break-inside-avoid">
+                <!-- Card 2: Plain (Removed shadow/border) -->
+                <div class="p-6 flex flex-col break-inside-avoid">
                     <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-lg flex items-center justify-center mb-4">
                         <i data-lucide="search-check"></i>
                     </div>
-                    <h4 class="font-bold text-lg mb-2">PGroonga 검색 엔진</h4>
-                    <p class="text-slate-600 text-sm mb-4 flex-grow">
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">PGroonga 검색 엔진</h4>
+                    <p class="text-slate-600 text-sm mb-4 flex-grow leading-relaxed">
                         단순 임베딩으로 놓칠 수 있는 <strong>고유명사/약어</strong>를 PGroonga의 고속 형태소 분석으로 보완하여 검색 완전성을 확보했습니다.
                     </p>
                 </div>
 
-                <!-- Tech Feature 3 -->
-                <div class="project-card p-6 flex flex-col break-inside-avoid">
+                <!-- Card 3: Highlighted Key Takeaway -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 flex flex-col h-full transition-all hover:shadow-xl break-inside-avoid">
                     <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-lg flex items-center justify-center mb-4">
                         <i data-lucide="book-open"></i>
                     </div>
-                    <h4 class="font-bold text-lg mb-2">Key Takeaway</h4>
-                    <p class="text-slate-600 text-sm mb-4 flex-grow">
-                        <strong>"Full-Cycle Development"</strong><br>
-                        기획부터 인프라 구축, 프론트/백엔드 개발까지 홀로 수행하며 <strong>SaaS 서비스의 전체적인 구조를 이해</strong>하게 되었습니다.
+                    <h4 class="font-bold text-lg mb-2 text-slate-900">Key Takeaway</h4>
+                    <p class="text-slate-600 text-sm mb-4 flex-grow leading-relaxed">
+                        기획부터 인프라 구축, 프론트/백엔드 개발까지 홀로 수행하며 <strong>SaaS 서비스의 전체적인 구조를 이해</strong>하게 된 소중한 성장의 계기였습니다.
                     </p>
-                      <!-- Result Section -->
-                      <div class="result-box mt-auto pt-4">
+                    <div class="result-box mt-auto pt-4">
                         <h4 class="font-bold text-sm mb-2 text-slate-900 flex items-center gap-2">
                             <i data-lucide="trending-up" class="text-green-500 w-4 h-4"></i> Personal Growth
                         </h4>
-                        <ul class="text-slate-600 text-xs space-y-1 list-disc list-inside">
-                            <li><strong>SaaS 구조 이해:</strong> 테넌트 데이터 격리 및 권한 설계를 직접 구현하며 멀티테넌시 완벽 이해</li>
-                            <li><strong>검색 엔진 튜닝:</strong> AI 검색과 키워드 검색(PGroonga)의 장단점을 체득하고 최적의 조합 발견</li>
+                        <ul class="text-slate-600 text-xs space-y-1 list-disc list-inside leading-tight">
+                            <li>멀티테넌시 구조에 대한 기술적 설계 역량 확보</li>
+                            <li>하이브리드 검색 엔진(AI+PGroonga) 튜닝 능력 숙달</li>
+                            <li>사용자 지향적인 UI/UX 설계 역량 강화</li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <!-- WebGuide Architecture & Links -->
             <div class="mt-12 bg-slate-50 rounded-xl p-8 border border-slate-200 fade-up break-inside-avoid">
-                <h4 class="font-bold text-slate-900 mb-4">System Architecture</h4>
-                <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-8 text-center">
                     <div class="flex-1 w-full">
-                        <div class="flex items-center gap-2 text-sm text-slate-600 font-mono bg-white p-4 rounded-lg border border-slate-200 justify-center">
-                            <span>Vue 3 (SPA)</span>
-                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                        <div class="flex flex-wrap items-center gap-2 text-sm text-slate-600 font-mono bg-white p-4 rounded-lg border border-slate-200 justify-center">
+                            <span>Vue 3 SPA</span>
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400"></i>
                             <span>Spring MVC</span>
-                            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                            <i data-lucide="arrow-right" class="w-4 h-4 text-slate-400"></i>
                             <span>PostgreSQL + PGroonga</span>
                         </div>
                     </div>
-                    
-                    <div class="flex flex-col gap-3 justify-center">
+                    <div class="flex flex-col gap-3">
                         <div class="flex gap-3">
-                            <a href="https://github.com/joonsu1229/web-guide-back-end" target="_blank" class="flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors text-sm font-bold">
-                                <i data-lucide="github" class="w-4 h-4"></i> Backend
-                            </a>
-                            <a href="https://github.com/joonsu1229/web-guide-front-end" target="_blank" class="flex items-center gap-2 px-5 py-2.5 bg-slate-800 text-white rounded-lg hover:bg-slate-700 transition-colors text-sm font-bold">
-                                <i data-lucide="github" class="w-4 h-4"></i> Frontend
-                            </a>
+                            <a href="https://github.com/joonsu1229/web-guide-back-end" target="_blank" class="px-5 py-2.5 bg-slate-800 text-white rounded-lg text-sm font-bold flex items-center gap-2 transition-all hover:bg-slate-700"><i data-lucide="github" class="w-4 h-4"></i> Backend</a>
+                            <a href="https://github.com/joonsu1229/web-guide-front-end" target="_blank" class="px-5 py-2.5 bg-slate-800 text-white rounded-lg text-sm font-bold flex items-center gap-2 transition-all hover:bg-slate-700"><i data-lucide="github" class="w-4 h-4"></i> Frontend</a>
                         </div>
-                        <!-- Live Demo Button -->
-                        <div class="flex flex-col gap-2">
-                            <a href="https://gw.webguide.kro.kr" target="_blank" class="flex items-center justify-center gap-2 px-5 py-2.5 bg-blue-600 hover:bg-blue-500 rounded-lg transition-colors text-sm font-bold text-white w-full">
-                                <i data-lucide="external-link" class="w-4 h-4"></i> Live Demo (WebGuide)
-                            </a>
-                            <div class="text-center">
-                                <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs border border-green-200 font-bold inline-flex items-center gap-1">
-                                    <i data-lucide="lock" class="w-3 h-3"></i> Let's Encrypt (Auto-renew)
-                                </span>
-                            </div>
-                        </div>
+                        <a href="https://gw.webguide.kro.kr" target="_blank" class="px-5 py-2.5 bg-blue-600 text-white rounded-lg text-sm font-bold flex items-center justify-center gap-2 shadow-md hover:bg-blue-500 transition-all"><i data-lucide="external-link" class="w-4 h-4"></i> Live Demo (WebGuide)</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- New Project: Rocket.Chat / Open Source -->
+    <!-- Project 4: Open Source Section -->
     <section id="project-opensource" class="py-24 bg-slate-50 border-t border-slate-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-12 fade-up">
                 <div class="flex items-center gap-2 mb-2">
-                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold">Open Source</span>
+                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold">Linux Admin</span>
                     <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">DevOps</span>
                 </div>
-                <h2 class="section-title">Rocket.Chat 오픈소스 커스텀 구축</h2>
-                <p class="text-xl text-slate-600 mt-4 max-w-3xl whitespace-nowrap">
-                    "클라우드 환경(ARM/aarch64) 제약을 극복하고, <strong>Node.js 수동 빌드 및 배포</strong>를 통해 시스템 운영 능력을 증명"
+                <h2 class="section-title">오픈소스 커스텀 구축 (Rocket.Chat)</h2>
+                <p class="text-xl text-slate-600 mt-4 max-w-3xl whitespace-nowrap leading-relaxed">
+                "ARM(aarch64) 아키텍처 제약을 **Node.js 수동 빌드**로 정면 돌파한 시스템 운영 역량"
                 </p>
             </div>
 
-            <!-- Forced 2-col Layout for OpenSource Section in Print -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-up print-grid-1-1">
-                <!-- Rocket.Chat Image -->
                 <div class="group relative rounded-xl overflow-hidden border border-slate-200 shadow-xl h-full min-h-[300px] break-inside-avoid">
-                    <img src="img/rocketchat.png" alt="ARM 서버에서 구동 중인 Rocket.Chat" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Rocket+Chat'">
-                    <div class="img-caption">ARM 서버에서 구동 중인 Rocket.Chat</div>
+                    <img src="img/rocketchat.png" alt="ARM 서버 구동" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Rocket+Chat'">
+                    <div class="img-caption">ARM 기반 서버에서 정상 구동 중인 오픈소스 메신저</div>
                 </div>
 
-                <!-- Content -->
-                <div class="space-y-6 break-inside-avoid">
+                <div class="space-y-6">
                     <div class="story-box mb-0">
                         <h3 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
                             <i data-lucide="cpu" class="text-slate-700"></i> Challenge: ARM 아키텍처 호환성
                         </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed">
-                            개인 프로젝트용으로 사용 중인 Oracle Cloud Free Tier는 <strong>ARM(aarch64) 기반 인스턴스</strong>를 제공합니다.
-                            당시 공식 Docker 이미지가 해당 아키텍처를 완벽히 지원하지 않아 자동 설치가 불가능한 상황이었습니다.
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+                            Oracle Cloud 서버는 ARM 기반으로 운영됩니다. 당시 공식 Docker 이미지가 이를 완벽히 지원하지 않아 단순 설치가 불가능했습니다. 시스템 운영 능력을 증명하기 위해 수동 설치를 선택했습니다.
                         </p>
                     </div>
 
                     <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm break-inside-avoid">
                         <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
-                            <i data-lucide="terminal" class="text-blue-600"></i> Solution: Node.js 수동 빌드
+                            <i data-lucide="terminal" class="text-blue-600"></i> Solution: Node.js 수동 빌드 및 서비스화
                         </h3>
-                        <p class="text-slate-600 text-sm mb-4">
-                            Docker 의존성 없이 리눅스 환경에 <strong>Node.js와 MongoDB를 직접 설치</strong>하고,
-                            소스 코드를 내려받아 해당 아키텍처에 맞게 <strong>바이너리를 직접 빌드(npm install)</strong>하여 구동에 성공했습니다.
+                        <p class="text-slate-600 text-sm mb-4 leading-relaxed">
+                            리눅스 환경에 Node.js와 MongoDB를 직접 설치하고, 소스코드를 해당 아키텍처에 맞게 직접 빌드하여 구동에 성공했습니다. systemd를 활용해 서비스화하여 안정적인 가동 환경을 구축했습니다.
                         </p>
                         <div class="flex flex-wrap gap-2">
-                            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-bold">CentOS/Rocky Linux</span>
-                            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-bold">Systemd Service</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-bold">CentOS/Rocky Admin</span>
                             <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-bold">Nginx Reverse Proxy</span>
+                            <span class="px-2 py-1 bg-slate-100 text-slate-600 text-xs rounded font-bold">Systemd Config</span>
                         </div>
                     </div>
 
-                    <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 break-inside-avoid">
-                        <h4 class="font-bold text-sm mb-2 text-blue-900 flex items-center gap-2">
-                            <i data-lucide="trending-up" class="text-blue-600 w-4 h-4"></i> Personal Growth (성과)
-                        </h4>
-                        <ul class="text-blue-800 text-xs space-y-2 list-disc list-inside">
-                            <li><strong>DevOps 자생력:</strong> 편리한 도구(Docker) 없이도 Raw Linux 환경에서 서비스를 구축하고 운영할 수 있는 능력 배양</li>
-                            <li><strong>아키텍처 이해:</strong> x86과 ARM 아키텍처의 차이, 바이너리 호환성 문제에 대한 깊은 이해</li>
-                            <li><strong>오픈소스 활용:</strong> 상용 솔루션을 대체할 오픈소스를 직접 호스팅하며 비용 절감 및 데이터 주권 확보</li>
-                        </ul>
-                    </div>
-
-                    <!-- Link Button & SSL Info -->
                     <div class="flex flex-col gap-2 pt-2 break-inside-avoid">
-                        <a href="https://msg.secretroom.kro.kr" target="_blank" class="flex items-center justify-center gap-2 px-5 py-3 bg-red-600 hover:bg-red-500 rounded-lg transition-colors text-sm font-bold text-white w-full shadow-md">
-                            <i data-lucide="message-square" class="w-4 h-4"></i> Live Demo (Rocket.Chat)
-                        </a>
-                        <div class="text-center">
-                            <span class="px-2 py-1 bg-green-100 text-green-700 rounded text-xs border border-green-200 font-bold inline-flex items-center gap-1">
-                                <i data-lucide="lock" class="w-3 h-3"></i> Let's Encrypt (Auto-renew)
-                            </span>
+                        <a href="https://msg.secretroom.kro.kr" target="_blank" class="flex items-center justify-center gap-2 px-5 py-3 bg-red-600 text-white rounded-lg hover:bg-red-500 font-bold shadow-md transition-all text-sm w-full"><i data-lucide="message-square" class="w-4 h-4"></i> Live Demo (Rocket.Chat)</a>
+                        <div class="text-center text-xs text-green-700 font-bold inline-flex items-center justify-center gap-1">
+                            <i data-lucide="lock" class="w-3 h-3"></i> Let's Encrypt (Auto-renew) 적용 완료
                         </div>
                     </div>
                 </div>
@@ -848,8 +974,8 @@
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-300 py-12 border-t border-slate-800 hidden-on-print">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-center md:text-left">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+            <div>
                 <h2 class="text-2xl font-bold text-white mb-2">Lee Jun-su</h2>
                 <p class="text-slate-500 text-sm">Full-Stack Developer & AI Engineer</p>
             </div>
@@ -857,13 +983,10 @@
                 <a href="https://itarchives.tistory.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-2">
                     <i data-lucide="book-open" class="w-5 h-5"></i> Tech Blog
                 </a>
-                <a href="mailto:joonsu1229@gmail.com" target="_blank" class="hover:text-primary transition-colors flex items-center gap-2">
+                <a href="mailto:joonsu1229@gmail.com" class="hover:text-primary transition-colors flex items-center gap-2">
                     <i data-lucide="mail" class="w-5 h-5"></i> Email
                 </a>
             </div>
-        </div>
-        <div class="text-center mt-10 text-xs text-slate-600">
-            &copy; 2025 Lee Jun-su. All rights reserved.
         </div>
     </footer>
 
@@ -882,7 +1005,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
-                    observer.unobserve(entry.target); // Animate only once
+                    observer.unobserve(entry.target); 
                 }
             });
         }, observerOptions);
