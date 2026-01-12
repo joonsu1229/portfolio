@@ -68,7 +68,6 @@
         /* [수정] Goal & Background Box (굵은 선 제거, Key Takeaway와 동일 스타일) */
         .story-box {
             @apply bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mb-8; 
-            border-left-width: 1px !important; /* 왼쪽 굵은 선 강제 제거 */
             border-color: #e2e8f0 !important; /* 슬레이트 200 색상 */
         }
         
@@ -191,6 +190,51 @@
             }
 
             /* =========================================
+               Issue 3: Clova X Seed 레이아웃 수정 (좌우 배치 복구 및 페이지 분할)
+               ========================================= */
+            #project-clova-seed {
+                padding-top: 2rem !important;
+                padding-bottom: 2rem !important;
+                break-before: page !important;
+                display: block !important;
+            }
+
+            /* 인쇄 시 하단 기술 분석 및 스택 영역을 강제로 좌우 2열로 고정 */
+            #project-clova-seed .max-w-7xl > .grid:last-child {
+                display: grid !important;
+                grid-template-columns: 2fr 1.2fr !important; /* 좌측 60%, 우측 40% 비율 유지 */
+                gap: 2rem !important;
+                width: 100% !important;
+                align-items: start !important;
+            }
+
+            /* 좌측 개요 영역 */
+            #project-clova-seed .lg\:col-span-2 {
+                grid-column: 1 / 2 !important;
+                width: 100% !important;
+            }
+
+            /* 우측 스택 카드 영역 */
+            #project-clova-seed .lg\:col-span-1 {
+                grid-column: 2 / 3 !important;
+                width: 100% !important;
+            }
+
+            /* 스택 카드의 sticky 해제 및 인쇄 전용 스타일 */
+            #project-clova-seed .sticky {
+                position: static !important;
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0 !important;
+                padding: 1.2rem !important;
+                border-radius: 1rem !important;
+            }
+            
+            #project-clova-seed .bg-slate-50 {
+                padding: 1.2rem !important;
+                border-radius: 0.75rem !important;
+            }
+
+            /* =========================================
                Issue 2: 감사로그(Audit Log) 레이아웃 수정
                ========================================= */
             #project-audit {
@@ -239,7 +283,7 @@
             }
 
             /* =========================================
-               나머지 섹션 공통 및 버튼 색상 수정
+               나머지 섹션 공통 및 페이지 강제 분할 설정
                ========================================= */
             #project-jsai, #project-webguide, #project-opensource {
                 padding-top: 2rem !important;
@@ -334,6 +378,7 @@
                 <div class="hidden md:flex space-x-6">
                     <a href="#about" class="text-slate-600 hover:text-primary transition-colors font-medium">About</a>
                     <a href="#infra" class="text-slate-600 hover:text-primary transition-colors font-medium">Infra</a>
+					<a href="#project-clova-seed" class="text-slate-600 hover:text-primary transition-colors font-medium">Clova X Seed</a>
                     <a href="#project-audit" class="text-slate-600 hover:text-primary transition-colors font-medium">Audit Log</a>
                     <a href="#project-jsai" class="text-slate-600 hover:text-primary transition-colors font-medium">JSAI</a>
                     <a href="#project-webguide" class="text-slate-600 hover:text-primary transition-colors font-medium">WebGuide</a>
@@ -349,6 +394,7 @@
         <div class="hidden md:hidden bg-white border-t border-slate-200 absolute w-full" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#infra" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">인프라 역량</a>
+				<a href="#project-clova-seed" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">Clova Seed 구축</a>
                 <a href="#project-audit" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">감사로그 시스템</a>
                 <a href="#project-jsai" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">AI 채용 플랫폼</a>
                 <a href="#project-webguide" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">웹가이드</a>
@@ -460,6 +506,106 @@
             </div>
         </div>
     </section>
+	
+    <!-- Project: HyperCLOVA X SEED -->
+    <section id="project-clova-seed" class="py-24 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 fade-up">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold">AI Infrastructure</span>
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">Open Source Analysis</span>
+                </div>
+                <h2 class="section-title">HyperCLOVA X SEED 분석 및 환경 구축</h2>
+                <p class="text-xl text-slate-600 mt-4 max-w-3xl whitespace-nowrap">
+                    "사내 분석 요청에 따른 <strong>오픈소스 모델 HyperCLOVA X SEED</strong> 구동 및 기술 검토를 위한 환경 구축"
+                </p>
+            </div>
+
+            <div class="story-box fade-up">
+                <h3 class="text-xl font-bold text-slate-900 mb-7 flex items-center gap-1">
+                    <i data-lucide="file-search" class="text-blue-500"></i> 구축 배경
+                </h3>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    사내에서 네이버 클라우드가 <strong>오픈소스로 공개한 HyperCLOVA X SEED</strong> 모델에 대한 기술 분석 요청을 받아 구축하였습니다. 보고 전 실제 모델의 동작 확인 및 분석을 위해 <strong>Hugging Face</strong> 를 분석, 개인 서버에 구동 환경을 구축하여 기능을 검증했습니다.
+                </p>
+                <h4 class="font-bold text-slate-800 mb-2 mt-4">🎯 주요 수행 내용</h4>
+                <ul class="list-disc list-inside text-slate-600 text-sm space-y-1 mb-4 bg-white p-4 rounded-lg border border-slate-200">
+                    <li>📋 <strong>오픈소스 모델 분석:</strong> SEED 모델(0.5B, 1.5B)의 파라미터 사이즈별 실제 리소스 사용량 및 추론 결과 확인</li>
+                    <li>📦 <strong>Hugging Face 연동:</strong> Clova X Seed 공식 저장소를 이용하여 Seed 모델 구축</li>
+                    <li>🛡️ <strong>Python venv 독립성 확보:</strong> 시스템 환경과의 충돌 방지 및 보고용 분석 환경의 독립성 유지를 위한 가상환경 구축</li>
+                    <li>🖥️ <strong>Chainlit 기반 테스트 UI 구현:</strong> 오픈소스 UI 프레임워크인 Chainlit을 연동하여 분석 결과를 시각적으로 확인하고 모델 응답을 실시간으로 검증</li>
+                </ul>
+            </div>
+
+            <!-- Image Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 fade-up print-grid-1-1">
+                <div class="group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm h-64 md:h-80 bg-slate-800 flex flex-col items-center justify-center text-slate-500">
+					<img src="img/downPyCode.png" alt="감사로그 상세 화면" class="w-full h-64 md:h-80 object-cover object-top hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Audit+Log+Detail'">
+                </div>
+                <div class="group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm h-64 md:h-80 bg-slate-100 flex flex-col items-center justify-center text-slate-400">
+					<img src="img/chatlit.png" alt="감사로그 상세 화면" class="w-full h-64 md:h-80 object-cover object-top hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Audit+Log+Detail'">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <div class="lg:col-span-2 space-y-8 fade-up">
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                        <h4 class="font-bold text-slate-900 mb-2">기술 분석 개요 (HyperCLOVA X SEED)</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            HyperCLOVA X SEED는 네이버 클라우드에서 오픈소스로 공개한 효율성 중심의 모델 시리즈입니다. 사내 분석 요청에 맞춰 0.5B, 1.5B 모델이 실제 리소스 환경에서 어떻게 동작하는지 확인하고, Chainlit을 사용하여 인터페이스 환경에서의 활용성을 분석했습니다.
+                        </p>
+                    </div>
+                    <div class="bg-slate-50 p-6 rounded-xl border border-slate-100">
+                        <h4 class="font-bold text-slate-900 mb-2">분석 환경 구축 전략</h4>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            기존 시스템 및 타 프로젝트와의 환경 충돌을 방지하고 시스템 안정성을 확보하기 위해 <strong>Python venv</strong>를 통한 의존성 격리를 적용했습니다. 특히 분석용 UI로 Chainlit을 도입하여, 모델의 성능과 응답 품질을 효율적으로 검증할 수 있었습니다.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-1 fade-up">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 sticky top-24">
+                        <h4 class="font-bold text-lg mb-6 text-slate-900 flex items-center gap-2 border-b pb-3">
+                            <i data-lucide="cpu" class="text-primary w-5 h-5"></i> Tech Stack
+                        </h4>
+                        
+                        <!-- Tech Pills Grid -->
+                        <div class="grid grid-cols-2 gap-2 mb-8">
+                            <div class="focus-pill bg-green-50 text-green-700 border-green-100">
+                                <i data-lucide="zap" class="w-3.5 h-3.5"></i> CLOVA X SEED
+                            </div>
+                            <div class="focus-pill bg-green-50 text-green-700 border-green-100">
+                                <i data-lucide="zap" class="w-3.5 h-3.5"></i> Python
+                            </div>							
+                            <div class="focus-pill bg-blue-50 text-blue-700 border-blue-100">
+                                <i data-lucide="layout" class="w-3.5 h-3.5"></i> Chainlit(UI)
+                            </div>
+                            <div class="focus-pill bg-yellow-50 text-yellow-700 border-yellow-100">
+                                <i data-lucide="smile" class="w-3.5 h-3.5"></i> Hugging Face
+                            </div>
+                        </div>
+
+                        <!-- Horizontal Action Buttons -->
+                        <div class="grid grid-cols-3 gap-2">
+                            <a href="https://jsai.clovastudio.kro.kr" target="_blank" class="flex flex-col items-center justify-center gap-2 p-3 bg-blue-600 text-white rounded-xl hover:bg-blue-500 transition-all shadow-sm group">
+                                <i data-lucide="external-link" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-[10px] font-bold">Demo</span>
+                            </a>
+                            <a href="https://itarchives.tistory.com/entry/HyperCLOVA-X-SEED-%EA%B5%AC%EC%B6%95-%ED%97%88%EA%B9%85%ED%8E%98%EC%9D%B4%EC%8A%A4-%EA%B6%8C%ED%95%9C-%EB%B0%8F-%ED%86%A0%ED%81%B0-%EC%84%A4%EC%A0%95" target="_blank" class="flex flex-col items-center justify-center gap-2 p-3 bg-green-600 text-white rounded-xl hover:bg-green-500 transition-all shadow-sm group">
+                                <i data-lucide="book-open" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-[10px] font-bold">Blog</span>
+                            </a>                            
+                            <a href="https://huggingface.co/naver-hyperclovax" target="_blank" class="flex flex-col items-center justify-center gap-2 p-3 bg-slate-900 text-white rounded-xl hover:bg-black transition-all shadow-sm group">
+                                <i data-lucide="smile" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+                                <span class="text-[10px] font-bold">Model</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+	
 
     <!-- Project 1: Audit Log System -->
     <section id="project-audit" class="py-24 bg-white">
@@ -801,7 +947,7 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 fade-up print-grid-3">
-                <div class="p-6 flex flex-col break-inside-avoid">
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 flex flex-col h-full transition-all hover:shadow-xl break-inside-avoid">
                     <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-lg flex items-center justify-center mb-4">
                         <i data-lucide="layers"></i>
                     </div>
@@ -811,7 +957,7 @@
                     </p>
                 </div>
 
-                <div class="p-6 flex flex-col break-inside-avoid">
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-100 flex flex-col h-full transition-all hover:shadow-xl break-inside-avoid">
                     <div class="w-12 h-12 bg-pink-100 text-pink-600 rounded-lg flex items-center justify-center mb-4">
                         <i data-lucide="search-check"></i>
                     </div>
@@ -856,51 +1002,79 @@
     </section>
 
     <!-- Project 4: Open Source Section -->
-    <section id="project-opensource" class="py-24 bg-slate-50 border-t border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-12 fade-up">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold">Linux Admin</span>
-                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">DevOps</span>
-                </div>
-                <h2 class="section-title">오픈소스 커스텀 구축 (Rocket.Chat)</h2>
-                <p class="text-xl text-slate-600 mt-4 max-w-3xl whitespace-nowrap leading-relaxed">
-                "ARM(aarch64) 아키텍처 제약을 Node.js 수동 빌드로 설치한 시스템 운영 역량"
-                </p>
-            </div>
+	<section id="project-opensource" class="py-24 bg-slate-50 border-t border-slate-200" style="page-break-before: always; break-before: page; min-height: 297mm; display: flex; flex-direction: column; justify-content: center;">
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+			<div class="mb-12 fade-up">
+				<div class="flex items-center gap-2 mb-2">
+					<span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold">Node.js Developer</span>
+					<span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">Linux Admin</span>
+					<span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold">DevOps</span>
+				</div>
+				<h2 class="section-title text-3xl font-extrabold text-slate-900">오픈소스 커스텀 구축 및 유지보수 (Rocket.Chat)</h2>
+				<p class="text-xl text-slate-600 mt-4 max-w-3xl leading-relaxed">
+					"인프라 제약을 넘어 PM2 프로세스 관리와 소스 수정을 통한 안정적 서비스 운영"
+				</p>
+			</div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center fade-up print-grid-1-1">
-                <div class="group relative rounded-xl overflow-hidden border border-slate-200 shadow-xl h-full min-h-[300px] break-inside-avoid">
-                    <img src="img/rocketchat.png" alt="ARM 서버 구동" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Rocket+Chat'">
-                    <div class="img-caption">ARM 기반 서버에서 정상 구동 중인 오픈소스 메신저</div>
-                </div>
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start fade-up print-grid-1-1">
+				<div class="space-y-4 break-inside-avoid">
+					<div class="group relative rounded-xl overflow-hidden border border-slate-200 shadow-xl min-h-[615px]">
+						<img src="img/rocketchat.png" alt="ARM 서버 구동" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Rocket+Chat+Custom'">
+						<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+							<p class="text-white text-sm font-medium">ARM64 기반 오라클 클라우드 환경에서 운영 중인 메신저</p>
+						</div>
+					</div>
+				</div>
 
-                <div class="space-y-6">
-                    <div class="story-box mb-0">
-                        <h3 class="text-xl font-bold text-slate-900 mb-3 flex items-center gap-2">
-                            <i data-lucide="cpu" class="text-slate-700"></i> Challenge: ARM 아키텍처 호환성
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                            Oracle Cloud 서버는 ARM 기반으로 운영됩니다. 당시 공식 Docker 이미지가 이를 완벽히 지원하지 않아 단순 설치가 불가능했습니다. 시스템 운영 능력을 증명하기 위해 수동 설치를 선택했습니다.
-                        </p>
-                    </div>
+				<div class="space-y-6">
+					<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm break-inside-avoid">
+						<h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
+							<i data-lucide="settings" class="text-slate-700"></i> 아키텍처 한계 극복 및 커스텀
+						</h3>
+						<ul class="text-slate-600 text-sm leading-relaxed space-y-3">
+							<li>
+								<strong>• 구축 배경:</strong> 보안이 보장된 독립적인 프라이빗 메신저 운영을 위해 구축
+							</li>
+							<li>
+								<strong>• ARM64 수동 빌드:</strong> 공식 Docker 이미지의 ARM 미지원 문제를 해결하기 위해 Node.js 환경에서 직접 소스 코드를 아키텍처에 맞춰 수동 빌드 후 최적화
+							</li>
+							<li>
+								<strong>• 브라우저 호환성 해결:</strong> 네이버 웨일 등 특정 브라우저에서 스크립트 충돌로 실행되지 않는 현상을 발견, <strong>직접 소스 코드를 패치(Patch)</strong>하여 정상 작동 구현
+							</li>
+						</ul>
+					</div>
 
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm break-inside-avoid">
-                        <h3 class="text-lg font-bold text-slate-900 mb-3 flex items-center gap-2">
-                            <i data-lucide="terminal" class="text-blue-600"></i> Solution: Node.js 수동 빌드 및 서비스화
-                        </h3>
-                        <p class="text-slate-600 text-sm mb-4 leading-relaxed">
-                            리눅스 환경에 Node.js와 MongoDB를 직접 설치하고, 소스코드를 해당 아키텍처에 맞게 직접 빌드하여 구동에 성공했습니다. systemd를 활용해 서비스화하여 안정적인 가동 환경을 구축했습니다.
-                        </p>
-                    </div>
+					<div class="bg-white p-6 rounded-xl border border-blue-100 shadow-sm break-inside-avoid" style="background-color: #f8faff;">
+						<h3 class="text-lg font-bold text-blue-900 mb-3 flex items-center gap-2">
+							<i data-lucide="zap" class="text-blue-600"></i> PM2 기반 자동 복구 및 메모리 관리
+						</h3>
+						<p class="text-slate-600 text-sm mb-4">
+							제한된 서버 리소스 환경에서 24/365 안정적인 서비스를 위해 프로세스 매니저를 고도화했습니다.
+						</p>
+						<div class="space-y-2">
+							<div class="flex justify-between items-center text-xs bg-slate-800 text-slate-300 p-2 rounded">
+								<code>pm2 start app.js --max-memory-restart 1G</code>
+							</div>
+							<ul class="text-slate-600 text-sm leading-relaxed space-y-1">
+								<li>• <strong>max-memory-restart:</strong> 메모리 사용량 상한선(1GB) 초과 시 자동 재시작 설정으로 OOM 방지</li>
+								<li>• <strong>Auto-Recovery:</strong> 프로세스 비정상 종료 시 즉시 자동 복구 로직 적용</li>
+								<li>• <strong>지속적 유지보수:</strong> 주기적인 메이저 업데이트 및 DB 인덱싱 최적화 수행</li>
+							</ul>
+						</div>
+					</div>
 
-                    <div class="flex flex-col gap-2 pt-2 break-inside-avoid">
-                        <a href="https://msg.secretroom.kro.kr" target="_blank" class="flex items-center justify-center gap-2 px-5 py-3 bg-red-600 text-white rounded-lg hover:bg-red-500 font-bold shadow-md transition-all text-sm w-full"><i data-lucide="message-square" class="w-4 h-4"></i> Live Demo (Rocket.Chat)</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+					<div class="grid grid-cols-2 gap-4 pt-2 break-inside-avoid">
+						<a href="https://msg.secretroom.kro.kr" target="_blank" class="flex items-center justify-center gap-2 px-5 py-3 bg-red-600 text-white rounded-lg hover:bg-red-500 font-bold shadow-md transition-all text-sm">
+							<i data-lucide="message-square" class="w-4 h-4"></i> Live Demo
+						</a>
+						<a href="https://github.com/rocketchat" target="_blank" class="flex items-center justify-center gap-2 px-5 py-3 bg-slate-800 text-white rounded-lg hover:bg-slate-700 font-bold shadow-md transition-all text-sm">
+							<i data-lucide="github" class="w-4 h-4"></i> Project Repo
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-300 py-12 border-t border-slate-800 hidden-on-print">
