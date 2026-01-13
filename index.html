@@ -104,7 +104,7 @@
             }
 
             /* =========================================
-               Issue 1: 첫 페이지 (Hero)
+                Issue 1: 첫 페이지 (Hero)
                ========================================= */
             header#about {
                 background-color: #0f172a !important; 
@@ -189,9 +189,14 @@
                 margin-top: 0.8rem !important;
             }
 
-            /* =========================================
-               Issue 3: Clova X Seed 레이아웃 수정 (좌우 배치 복구 및 페이지 분할)
-               ========================================= */
+            /* Jenkins 섹션 인쇄 설정 */
+            #project-jenkins {
+                padding-top: 2rem !important;
+                break-before: page !important;
+                break-after: page !important;
+                display: block !important;
+            }
+
             #project-clova-seed {
                 padding-top: 2rem !important;
                 padding-bottom: 2rem !important;
@@ -199,44 +204,19 @@
                 display: block !important;
             }
 
-            /* 인쇄 시 하단 기술 분석 및 스택 영역을 강제로 좌우 2열로 고정 */
             #project-clova-seed .max-w-7xl > .grid:last-child {
                 display: grid !important;
-                grid-template-columns: 2fr 1.2fr !important; /* 좌측 60%, 우측 40% 비율 유지 */
+                grid-template-columns: 2fr 1.2fr !important; 
                 gap: 2rem !important;
                 width: 100% !important;
                 align-items: start !important;
             }
 
-            /* 좌측 개요 영역 */
-            #project-clova-seed .lg\:col-span-2 {
-                grid-column: 1 / 2 !important;
-                width: 100% !important;
-            }
+            #project-clova-seed .lg\:col-span-2 { grid-column: 1 / 2 !important; width: 100% !important; }
+            #project-clova-seed .lg\:col-span-1 { grid-column: 2 / 3 !important; width: 100% !important; }
+            #project-clova-seed .sticky { position: static !important; box-shadow: none !important; border: 1px solid #e2e8f0 !important; padding: 1.2rem !important; border-radius: 1rem !important; }
+            #project-clova-seed .bg-slate-50 { padding: 1.2rem !important; border-radius: 0.75rem !important; }
 
-            /* 우측 스택 카드 영역 */
-            #project-clova-seed .lg\:col-span-1 {
-                grid-column: 2 / 3 !important;
-                width: 100% !important;
-            }
-
-            /* 스택 카드의 sticky 해제 및 인쇄 전용 스타일 */
-            #project-clova-seed .sticky {
-                position: static !important;
-                box-shadow: none !important;
-                border: 1px solid #e2e8f0 !important;
-                padding: 1.2rem !important;
-                border-radius: 1rem !important;
-            }
-            
-            #project-clova-seed .bg-slate-50 {
-                padding: 1.2rem !important;
-                border-radius: 0.75rem !important;
-            }
-
-            /* =========================================
-               Issue 2: 감사로그(Audit Log) 레이아웃 수정
-               ========================================= */
             #project-audit {
                 padding-top: 1.5rem !important;
                 padding-bottom: 0 !important;
@@ -249,42 +229,19 @@
 
             #project-audit .grid.lg\:grid-cols-3 {
                 display: grid !important;
-                grid-template-columns: 1.5fr 1fr !important; /* 좌측 60%, 우측 40% */
+                grid-template-columns: 1.5fr 1fr !important; 
                 gap: 1.5rem !important;
             }
-            #project-audit .lg\:col-span-2 {
-                grid-column: 1 / 2 !important;
-            }
-            #project-audit .lg\:col-span-1 {
-                grid-column: 2 / 3 !important;
-            }
+            #project-audit .lg\:col-span-2 { grid-column: 1 / 2 !important; }
+            #project-audit .lg\:col-span-1 { grid-column: 2 / 3 !important; }
 
             #project-audit .mb-12 { margin-bottom: 0.5rem !important; }
             #project-audit .section-title { margin-bottom: 0.2rem !important; font-size: 1.8rem !important; }
             #project-audit p.text-xl { font-size: 1rem !important; margin-top: 0.2rem !important; margin-bottom: 0.5rem !important; }
-            
-            #project-audit .story-box { 
-                padding: 0.8rem !important; 
-                margin-bottom: 0.5rem !important; 
-                border-radius: 1rem !important;
-                border-left-width: 1px !important;
-            }
+            #project-audit .story-box { padding: 0.8rem !important; margin-bottom: 0.5rem !important; border-radius: 1rem !important; border-left-width: 1px !important; }
+            #project-audit img { height: 120px !important; object-fit: cover !important; border-radius: 0.75rem !important; }
+            #project-audit .bg-slate-50.p-6 { padding: 0.8rem !important; margin-bottom: 0.5rem !important; border-radius: 1rem !important; }
 
-            #project-audit img { 
-                height: 120px !important; 
-                object-fit: cover !important; 
-                border-radius: 0.75rem !important; 
-            }
-            
-            #project-audit .bg-slate-50.p-6 { 
-                padding: 0.8rem !important; 
-                margin-bottom: 0.5rem !important;
-                border-radius: 1rem !important;
-            }
-
-            /* =========================================
-               나머지 섹션 공통 및 페이지 강제 분할 설정
-               ========================================= */
             #project-jsai, #project-webguide, #project-opensource {
                 padding-top: 2rem !important;
                 padding-bottom: 1rem !important;
@@ -294,12 +251,7 @@
                 display: block !important;
             }
             
-            .story-box { 
-                padding: 1rem !important; 
-                margin-bottom: 1rem !important; 
-                border-radius: 1rem !important; 
-                border-left-width: 1px !important;
-            }
+            .story-box { padding: 1rem !important; margin-bottom: 1rem !important; border-radius: 1rem !important; border-left-width: 1px !important; }
             
             .print-bento-grid {
                 display: grid !important;
@@ -313,7 +265,8 @@
             
             .print-grid-1-1,
             #project-jsai .grid.lg\:grid-cols-2,
-            #project-opensource .grid.lg\:grid-cols-2 {
+            #project-opensource .grid.lg\:grid-cols-2,
+            #project-jenkins .grid.lg\:grid-cols-2 {
                 display: grid !important;
                 grid-template-columns: 1fr 1fr !important;
                 gap: 2rem !important;
@@ -326,37 +279,17 @@
                 gap: 1rem !important;
             }
 
-            /* [수정] PDF 인쇄 시 버튼 색상 강제 지정 (HTML과 동일하게) */
             section a {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 text-decoration: none !important;
                 border-radius: 0.5rem !important;
-                border: none !important; /* 인쇄 시 테두리 제거로 깔끔하게 */
+                border: none !important;
             }
-            /* GitHub/Backend 버튼 (Slate 800) */
-            section a.bg-slate-800, 
-            section a.bg-slate-900 {
-                background-color: #1e293b !important; 
-                color: white !important;
-            }
-            /* Live Demo 버튼 (Blue 600) */
-            section a.bg-blue-600 {
-                background-color: #2563eb !important; 
-                color: white !important;
-            }
-            /* Rocket.Chat 버튼 (Red 600) */
-            section a.bg-red-600 {
-                background-color: #dc2626 !important; 
-                color: white !important;
-            }
-            /* 백그라운드가 밝은 버튼 */
-            section a.bg-white,
-            section a.bg-slate-100 {
-                color: #1e293b !important;
-                background-color: white !important;
-                border: 1px solid #e2e8f0 !important;
-            }
+            section a.bg-slate-800, section a.bg-slate-900 { background-color: #1e293b !important; color: white !important; }
+            section a.bg-blue-600 { background-color: #2563eb !important; color: white !important; }
+            section a.bg-red-600 { background-color: #dc2626 !important; color: white !important; }
+            section a.bg-white, section a.bg-slate-100 { color: #1e293b !important; background-color: white !important; border: 1px solid #e2e8f0 !important; }
             
             section, .story-box, .project-card, .result-box, .infra-box, h3, h4 {
                 break-inside: avoid !important;
@@ -377,11 +310,12 @@
                 </div>
                 <div class="hidden md:flex space-x-6">
                     <a href="#about" class="text-slate-600 hover:text-primary transition-colors font-medium">About</a>
-                    <a href="#infra" class="text-slate-600 hover:text-primary transition-colors font-medium">Infra</a>
-					<a href="#project-clova-seed" class="text-slate-600 hover:text-primary transition-colors font-medium">Clova X Seed</a>
+                    <a href="#infra" class="text-slate-600 hover:text-primary transition-colors font-medium">Infra</a>                    
+                    <a href="#project-clova-seed" class="text-slate-600 hover:text-primary transition-colors font-medium">Clova X Seed</a>
                     <a href="#project-audit" class="text-slate-600 hover:text-primary transition-colors font-medium">Audit Log</a>
                     <a href="#project-jsai" class="text-slate-600 hover:text-primary transition-colors font-medium">JSAI</a>
                     <a href="#project-webguide" class="text-slate-600 hover:text-primary transition-colors font-medium">WebGuide</a>
+					<a href="#project-jenkins" class="text-slate-600 hover:text-primary transition-colors font-medium">CI/CD</a>
                     <a href="#project-opensource" class="text-slate-600 hover:text-primary transition-colors font-medium">Open Source</a>
                 </div>
                 <div class="md:hidden flex items-center">
@@ -393,11 +327,12 @@
         </div>
         <div class="hidden md:hidden bg-white border-t border-slate-200 absolute w-full" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#infra" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">인프라 역량</a>
-				<a href="#project-clova-seed" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">Clova Seed 구축</a>
+                <a href="#infra" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">인프라 역량</a>                
+                <a href="#project-clova-seed" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">Clova Seed 구축</a>
                 <a href="#project-audit" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">감사로그 시스템</a>
                 <a href="#project-jsai" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">AI 채용 플랫폼</a>
                 <a href="#project-webguide" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">웹가이드</a>
+				<a href="#project-jenkins" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">CI/CD 자동화</a>
                 <a href="#project-opensource" class="block px-3 py-2 text-slate-600 hover:text-primary font-medium">오픈소스 구축</a>
             </div>
         </div>
@@ -1001,6 +936,129 @@
             </div>
         </div>
     </section>
+	
+    <!-- Project: Jenkins CI/CD Automation -->
+    <section id="project-jenkins" class="py-24 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 fade-up">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold">Jenkins CI/CD</span>
+                    <span class="px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold">Spring Automation</span>
+                </div>
+                <h2 class="section-title">Spring Framework 자동 빌드 및 배포 시스템 구축</h2>
+                <p class="text-xl text-slate-600 mt-4 max-w-3xl leading-relaxed">
+                    "크롤링 시스템과 웹가이드 프로젝트의 <strong>Spring WAR 파일 자동 빌드</strong> 파이프라인 구축을 통한 생산성 향상"
+                </p>
+            </div>
+
+            <div class="story-box fade-up">
+                <h3 class="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+                    <i data-lucide="repeat" class="text-blue-500"></i> Jenkins 도입 및 Spring 자동화 성과
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-3">🛠 도입 이전 (수동 환경)</h4>
+                        <ul class="space-y-3 text-slate-600 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="minus-circle" class="text-slate-400 w-5 h-5 flex-shrink-0 mt-0.5"></i>
+                                <span><strong>개별 로컬 빌드:</strong> 개발자가 직접 WAR 파일을 생성하여 서버로 전송</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="minus-circle" class="text-slate-400 w-5 h-5 flex-shrink-0 mt-0.5"></i>
+                                <span><strong>배포 지연:</strong> 다수의 Spring 프로젝트를 수동으로 배포하며 불필요한 공수 발생</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-800 mb-3">🚀 도입 이후 (Jenkins 자동화)</h4>
+                        <ul class="space-y-3 text-slate-600 text-sm">
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0 mt-0.5"></i>
+                                <span><strong>원클릭 빌드:</strong> Jenkins 서버에서 Maven/Gradle을 이용해 순수 WAR 자동 생성</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i data-lucide="check-circle" class="text-emerald-500 w-5 h-5 flex-shrink-0 mt-0.5"></i>
+                                <span><strong>운영 안정성:</strong> 빌드 성공 여부를 대시보드에서 즉시 확인하여 안정적인 배포 유지</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Jenkins Section Image -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12 fade-up print-grid-1-1">
+                <div class="group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm h-64 md:h-80 bg-slate-800 flex flex-col items-center justify-center text-slate-500">
+					<img src="img/jenkins1.png" class="w-full h-64 md:h-80 object-cover object-top hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Audit+Log+Detail'">
+                </div>
+                <div class="group relative rounded-xl overflow-hidden border border-slate-200 shadow-sm h-64 md:h-80 bg-slate-100 flex flex-col items-center justify-center text-slate-400">
+					<img src="img/jenkins2.png"  class="w-full h-64 md:h-80 object-cover object-top hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400?text=Audit+Log+Detail'">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start fade-up print-grid-1-1">
+                <!-- Pipeline Logic -->
+                <div class="space-y-8">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-4">🔄 Spring War Build Flow</h3>
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-200">
+                        <div class="pipeline-step">
+                            <div class="pipeline-dot"></div>
+                            <h4 class="font-bold text-slate-900">1. GitHub Webhook Trigger</h4>
+                            <p class="text-xs text-slate-500">Spring 소스 코드 Push 시 Jenkins가 배포 작업 시작</p>
+                        </div>
+                        <div class="pipeline-step">
+                            <div class="pipeline-dot"></div>
+                            <h4 class="font-bold text-slate-900">2. Maven Clean & Build</h4>
+                            <p class="text-xs text-slate-500">서버 환경에서 최신 라이브러리 의존성을 포함한 WAR 파일 생성</p>
+                        </div>
+                        <div class="pipeline-step">
+                            <div class="pipeline-dot"></div>
+                            <h4 class="font-bold text-slate-900">3. War Artifacts Transfer</h4>
+                            <p class="text-xs text-slate-500">생성된 실행 파일을 대상 서버의 Deploy 경로로 자동 전송</p>
+                        </div>
+                        <div class="pipeline-step">
+                            <div class="pipeline-dot"></div>
+                            <h4 class="font-bold text-slate-900">4. Service Hot-swap / Restart</h4>
+                            <p class="text-xs text-slate-500">Tomcat 등 WAS 환경에 맞춰 신규 WAR 적용 및 서비스 갱신</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Summary & Button -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200">
+                        <h4 class="font-bold text-lg mb-4 text-slate-900 flex items-center gap-2">
+                            <i data-lucide="cpu" class="text-primary"></i> 적용 및 기술 정보
+                        </h4>
+                        <div class="space-y-4">
+                            <div>
+                                <h5 class="font-bold text-sm text-blue-600 mb-1">적용 프로젝트</h5>
+                                <p class="text-xs text-slate-600 leading-relaxed">JSAI 크롤링 시스템 (Spring), WebGuide 가이드 시스템 (Spring)</p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-sm text-slate-900 mb-2">Jenkins Pipeline Stack</h5>
+                                <div class="flex flex-wrap gap-2 mb-6">
+                                    <span class="tech-pill">Jenkins</span>
+                                    <span class="tech-pill">Spring Boot/Framework</span>
+                                    <span class="tech-pill">Maven</span>
+                                    <span class="tech-pill">WAR Packaging</span>
+                                    <span class="tech-pill">Shell Script</span>
+                                    <span class="tech-pill">SSH Deploy</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Jenkins Action Button -->
+                            <div class="pt-4 border-t border-slate-100">
+                                <a href="https://jenkins.secretroom.kro.kr" target="_blank" class="flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 font-bold shadow-md transition-all text-sm w-full group">
+                                    <i data-lucide="external-link" class="w-4 h-4 group-hover:scale-110 transition-transform"></i> 
+                                    Jenkins Dashboard 바로가기
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>	
 
     <!-- Project 4: Open Source Section -->
 	<section id="project-opensource" class="py-24 bg-slate-50 border-t border-slate-200" style="page-break-before: always; break-before: page; min-height: 297mm; display: flex; flex-direction: column; justify-content: center;">
